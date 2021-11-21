@@ -15,10 +15,8 @@
 	{
 #endif
 
-#if !defined(_SG4)
-#include "bur.h"
-#endif
-#include "VarTools.h"
+	#include "varToolsInternal.h"
+	#include "VarTools.h"
 
 #ifdef __cplusplus
 	};

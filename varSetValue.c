@@ -15,7 +15,8 @@
 	{
 #endif
 
-#include "VarTools.h"
+	#include "varToolsInternal.h"
+	#include "VarTools.h"
 
 #ifdef __cplusplus
 	};

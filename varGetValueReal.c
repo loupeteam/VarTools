@@ -4,6 +4,7 @@
 	{
 #endif
 
+	#include "varToolsInternal.h"
 	#include "VarTools.h"
 
 #ifdef __cplusplus
