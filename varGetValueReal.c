@@ -157,7 +157,7 @@ switch( ipVariable->dataType ){
 			// We do not have a brwatof function
 			// So instead convert to string then use brsatof
 			char tempString[25]; // Max number of characters of a double is 24
-			wstring2string((UDINT)tempString, ipVariable->address, sizeof(tempString));
+			wstring2string( (UDINT)tempString, ipVariable->address, sizeof(tempString));
 	
 			*(REAL*)pValue = brsatof((UDINT)tempString); 
 	

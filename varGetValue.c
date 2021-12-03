@@ -63,7 +63,7 @@ unsigned short varGetValue(unsigned long pVariable)
 
 	// Check address
 	varVariable_typ	*ipVariable = (varVariable_typ*)pVariable;
-	UINT status;
+	UINT status = 0;
 
 	if (ipVariable->address == 0) {
 		// Get info if necessary
@@ -79,11 +79,15 @@ unsigned short varGetValue(unsigned long pVariable)
 	DINT	valueDint;
 	UDINT	valueUdint;
 	REAL	valueReal;
+	STRING 	valueString[VAR_STRLEN_NAME+1];
+	UDINT	valueStringLen = 0;
 
 
-	// Clear the Value string. It will be overwritten below
-
-	memset( ipVariable->value, 0, sizeof(ipVariable->value) );
+	// Lazy Clear the Value string. It will be overwritten below
+	valueString[0] = '\0';
+	
+	// Reset changed status
+	ipVariable->changed = 0;
 
 
 	switch( ipVariable->dataType ){
@@ -97,21 +101,23 @@ unsigned short varGetValue(unsigned long pVariable)
 		
 			if( *(BOOL*)(ipVariable->address) == 0 ){
 			
-				strcpy( ipVariable->value, "false" );
+				strcpy( valueString, "false" );
 			
 			}
 			else if( *(BOOL*)(ipVariable->address) == 1 ){
 			
-				strcpy( ipVariable->value, "true" );
+				strcpy( valueString, "true" );
 			
 			}
 			else{
 			
 				// Invalid BOOL value.
 				// Use convention of non-zero == TRUE for now
-				strcpy( ipVariable->value, "true" );
+				strcpy( valueString, "true" );
 			
 			}
+			
+			valueStringLen = strlen( valueString );
 		
 			break;
 	
@@ -124,7 +130,9 @@ unsigned short varGetValue(unsigned long pVariable)
 		
 			valueDint=	*(SINT*)(ipVariable->address);
 		
-			brsitoa( valueDint, (UDINT)ipVariable->value );
+			brsitoa( valueDint, (UDINT)valueString );
+			
+			valueStringLen = strlen( valueString );
 		
 			break;
 	
@@ -133,8 +141,10 @@ unsigned short varGetValue(unsigned long pVariable)
 		
 			valueDint=	*(INT*)(ipVariable->address);
 		
-			brsitoa( valueDint, (UDINT)ipVariable->value );
+			brsitoa( valueDint, (UDINT)valueString );
 		
+			valueStringLen = strlen( valueString );
+			
 			break;
 	
 	
@@ -143,8 +153,10 @@ unsigned short varGetValue(unsigned long pVariable)
 		
 			valueDint=	*(DINT*)(ipVariable->address);
 		
-			brsitoa( valueDint, (UDINT)ipVariable->value );
+			brsitoa( valueDint, (UDINT)valueString );
 		
+			valueStringLen = strlen( valueString );
+			
 			break;
 	
 		case VAR_TYPE_BYTE:
@@ -152,8 +164,10 @@ unsigned short varGetValue(unsigned long pVariable)
 		
 			valueDint=	*(USINT*)(ipVariable->address);
 		
-			brsitoa( valueDint, (UDINT)ipVariable->value );
+			brsitoa( valueDint, (UDINT)valueString );
 		
+			valueStringLen = strlen( valueString );
+			
 			break;
 
 		case VAR_TYPE_WORD:
@@ -161,8 +175,10 @@ unsigned short varGetValue(unsigned long pVariable)
 		
 			valueDint=	*(UINT*)(ipVariable->address);
 		
-			brsitoa( valueDint, (UDINT)ipVariable->value );
+			brsitoa( valueDint, (UDINT)valueString );
 		
+			valueStringLen = strlen( valueString );
+			
 			break;
 	
 		case VAR_TYPE_DWORD:
@@ -171,8 +187,10 @@ unsigned short varGetValue(unsigned long pVariable)
 		
 			valueUdint=	*(UDINT*)(ipVariable->address);
 		
-			uitoa( valueUdint, (UDINT)ipVariable->value );
+			uitoa( valueUdint, (UDINT)valueString );
 		
+			valueStringLen = strlen( valueString );
+			
 			break;
 	
 	
@@ -184,7 +202,9 @@ unsigned short varGetValue(unsigned long pVariable)
 		
 			valueReal=	*(REAL*)(ipVariable->address);
 		
-			brsftoa( valueReal, (UDINT)ipVariable->value );
+			brsftoa( valueReal, (UDINT)valueString );
+			
+			valueStringLen = strlen( valueString );
 		
 			break;
 	
@@ -196,7 +216,9 @@ unsigned short varGetValue(unsigned long pVariable)
 		
 			valueReal=	(REAL)*(LREAL*)(ipVariable->address);
 		
-			brsftoa( valueReal, (UDINT)ipVariable->value );
+			brsftoa( valueReal, (UDINT)valueString );
+			
+			valueStringLen = strlen( valueString );
 		
 			break;
 	
@@ -206,14 +228,13 @@ unsigned short varGetValue(unsigned long pVariable)
 	
 		case VAR_TYPE_STRING:
 		
-			strncpy(ipVariable->value, (char*)ipVariable->address, VAR_STRLEN_VALUE);
-			ipVariable->value[VAR_STRLEN_VALUE] = '\0';
+			valueStringLen = stringlcpy( (UDINT)valueString, ipVariable->address, sizeof(valueString) );
 		
 			break;
 		
 		case VAR_TYPE_WSTRING:
 			
-			wstring2string((UDINT)ipVariable->value, ipVariable->address, VAR_STRLEN_VALUE);
+			valueStringLen = wstring2string( (UDINT)valueString, ipVariable->address, sizeof(valueString) );
 			
 			break;
 		
@@ -228,16 +249,33 @@ unsigned short varGetValue(unsigned long pVariable)
 		case VAR_TYPE_ARRAY_OF_STRUCT:
 		case VAR_TYPE_TIME_OF_DAY:
 		case VAR_TYPE_LWORD:
-		case VAR_TYPE_LINT: return VAR_ERR_UNSUPPORTEDTYPE; break;
-		case VAR_TYPE_UNDEFINED:  return VAR_ERR_PV_NOT_FOUND; break;
+		case VAR_TYPE_LINT: 
+			status = VAR_ERR_UNSUPPORTEDTYPE; 
+			break;
+		
+		case VAR_TYPE_UNDEFINED:  
+			valueStringLen = stringlcpy( (UDINT)valueString, (UDINT)"undefined", sizeof(valueStringLen) ); 
+			status = VAR_ERR_PV_NOT_FOUND;
+			break;
 
-		default: return VAR_ERR_INVALIDTYPE; break;	
+		default: 
+			status = VAR_ERR_INVALIDTYPE; 
+			break;	
 	
 	
 	} // switch(DataType) //
 
+	// Check for value changed
+	if( valueStringLen != strlen(ipVariable->value)
+	|| strcmp( valueString, ipVariable->value )) {
+		
+		ipVariable->changed = 1;
+		// Note: valueStringLen may be greater than sizeof(ipVariable->value)
+		strcpy(ipVariable->value, valueString);
+		
+	}
 
-	return 0;
+	return status;
 
 
 } // End Fn //
