@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<?AutomationStudio Version=4.5.5.113 SP?>
+<?AutomationStudio FileVersion="4.9"?>
 <Library Version="0.10.0" SubType="ANSIC" xmlns="http://br-automation.co.at/AS/Library">
   <Files>
     <File>RevisionHistory.txt</File>
@@ -15,8 +15,10 @@
     <File Description="Set the value of a variable from a string">varVariableWatch.c</File>
     <File>variableBrowser.c</File>
     <File Description="Force refresh of variable information in next getValue call">varRefresh.c</File>
-    <File Description="">varToolsInternal.h</File>
-</Files>
+    <File>varToolsInternal.h</File>
+    <File>varCache.h</File>
+    <File>varCache.cpp</File>
+  </Files>
   <Dependencies>
     <Dependency ObjectName="sys_lib" />
     <Dependency ObjectName="StringExt" FromVersion="0.14.0" ToVersion="0.14.9" />
