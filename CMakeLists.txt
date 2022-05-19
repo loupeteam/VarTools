@@ -15,6 +15,3 @@ add_definitions(-D_REPLACE_CONST)
 add_compile_options(-Wint-to-pointer-cast -Wpointer-to-int-cast)
 
 add_library(${PROJECT_NAME} ${lib_SRC})
-
-target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/../includes/)
-target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/../includes/loupe/Includes/)
