@@ -1,0 +1,64 @@
+/********************************************************************
+ * COPYRIGHT --  
+ ********************************************************************
+ * Library: VarTools
+ * Author: Josh
+ * Created: Aug 1, 2022
+ ********************************************************************
+ * Implementation of library VarTools
+ ********************************************************************/
+
+#include <bur/plctypes.h>
+#ifdef __cplusplus
+	extern "C"
+	{
+#endif
+
+	#include "varToolsInternal.h"
+	#include "VarTools.h"
+
+#ifdef __cplusplus
+	};
+#endif
+
+#include <string.h>
+#include <stdlib.h>
+
+plcbit varPopulateMemberNames( plcstring * VariableName, unsigned char prefix )
+{	
+	varVariable_typ v; 
+	strncpy( v.name, VariableName, sizeof(v.name));
+	varGetInfo( (UDINT) &v );
+
+	STRING variableName[200];
+	STRING memberName[38];
+	STRING arrayIndex[4];
+	int memberIndex = 0;
+
+	switch ( v.dataType )
+	{
+	case VAR_TYPE_STRING:
+		strncpy( (void*)v.address, VariableName + prefix, v.length);
+		break;
+	case VAR_TYPE_STRUCT:
+		while( PV_item( VariableName, memberIndex++, memberName) == 0 ){
+			strcpy( variableName, VariableName);
+			strncat( variableName,".", sizeof(variableName) );
+			strncat( variableName, memberName, sizeof(variableName));
+			varPopulateMemberNames( variableName, prefix );			
+		}	
+		break;	
+	case VAR_TYPE_ARRAY_OF_STRUCT:
+		for( memberIndex = 0; memberIndex < v.dimension; memberIndex++ ){
+			strcpy( variableName, VariableName);
+			strncat( variableName,"[", sizeof(variableName) );
+			itoa(memberIndex, arrayIndex, 10);	
+			strncat( variableName, arrayIndex, sizeof(variableName));
+			strncat( variableName,"]", sizeof(variableName) );
+			varPopulateMemberNames( variableName, prefix );			
+		}
+		break;	
+	default:
+		break;
+	}
+}

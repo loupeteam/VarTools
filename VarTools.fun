@@ -54,6 +54,13 @@ FUNCTION varGetVariableList : UINT (*Get a list of all local and global variable
 	END_VAR
 END_FUNCTION
 
+FUNCTION varPopulateMemberNames : BOOL
+	VAR_INPUT
+		PVName : STRING[80];
+		prefix : USINT;
+	END_VAR
+END_FUNCTION
+
 FUNCTION_BLOCK varVariableWatch
 	VAR_INPUT
 		pVariable : {REDUND_UNREPLICABLE} UDINT;

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <?AutomationStudio Version=4.5.5.113 SP?>
-<Library Version="0.10.1" SubType="ANSIC" xmlns="http://br-automation.co.at/AS/Library">
+<Library Version="0.11.0" SubType="ANSIC" xmlns="http://br-automation.co.at/AS/Library">
   <Files>
     <File>RevisionHistory.txt</File>
     <File Description="Exported data types">VarTools.typ</File>
@@ -11,6 +11,7 @@
     <File Description="Get the value of a variable as a real">varGetValueReal.c</File>
     <File Description="Get the value of a variable as a lreal">varGetValueLreal.c</File>
     <File Description="Set the value of a variable from a string">varSetValue.c</File>
+    <File Description="Set the value of a variable it's own name">varPopulateMemberNames.c</File>
     <File Description="Get a list of all local and global variables with a given name">varGetVariableList.c</File>
     <File Description="Set the value of a variable from a string">varVariableWatch.c</File>
     <File>variableBrowser.c</File>

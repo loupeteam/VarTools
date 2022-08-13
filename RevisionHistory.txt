@@ -1,3 +1,4 @@
+0.11.0 - Add new function to populate all the string members of a structure to the variable name
 0.10.1 - Add support for external build
 0.10.0 - Add support for BYTE, WORD, and DWORD
 0.9.2 - Reduce repeated varGetInfo calls on unfound vars
