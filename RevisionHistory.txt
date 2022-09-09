@@ -1,3 +1,4 @@
+0.11.1 - Fix bug in populate variable values with arrays of strings
 0.11.0 - Add new function to populate all the string members of a structure to the variable name
 0.10.1 - Add support for external build
 0.10.0 - Add support for BYTE, WORD, and DWORD
