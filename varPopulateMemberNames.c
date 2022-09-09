@@ -38,7 +38,19 @@ plcbit varPopulateMemberNames( plcstring * VariableName, unsigned char prefix )
 	switch ( v.dataType )
 	{
 	case VAR_TYPE_STRING:
-		strncpy( (void*)v.address, VariableName + prefix, v.length);
+			if( v.dimension > 1 ){
+				for( memberIndex = 0; memberIndex < v.dimension; memberIndex++ ){
+					strcpy( variableName, VariableName);
+					strncat( variableName,"[", sizeof(variableName) );
+					itoa(memberIndex, arrayIndex, 10);	
+					strncat( variableName, arrayIndex, sizeof(variableName));
+					strncat( variableName,"]", sizeof(variableName) );
+					varPopulateMemberNames( variableName, prefix );			
+				}
+			}
+			else{
+				strncpy( (void*)v.address, VariableName + prefix, v.length);
+			}
 		break;
 	case VAR_TYPE_STRUCT:
 		while( PV_item( VariableName, memberIndex++, memberName) == 0 ){
@@ -46,7 +58,7 @@ plcbit varPopulateMemberNames( plcstring * VariableName, unsigned char prefix )
 			strncat( variableName,".", sizeof(variableName) );
 			strncat( variableName, memberName, sizeof(variableName));
 			varPopulateMemberNames( variableName, prefix );			
-		}	
+		}
 		break;	
 	case VAR_TYPE_ARRAY_OF_STRUCT:
 		for( memberIndex = 0; memberIndex < v.dimension; memberIndex++ ){
