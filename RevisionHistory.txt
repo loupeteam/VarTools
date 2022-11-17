@@ -1,3 +1,4 @@
+0.12.0 - populate variable values will populate ._ with just the parent name 
 0.11.1 - Fix bug in populate variable values with arrays of strings
 0.11.0 - Add new function to populate all the string members of a structure to the variable name
 0.10.1 - Add support for external build
