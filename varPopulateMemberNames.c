@@ -35,6 +35,8 @@ plcbit varPopulateMemberNames( plcstring * VariableName, unsigned char prefix )
 	STRING arrayIndex[4];
 	int memberIndex = 0;
 
+	strcpy( variableName, VariableName);
+
 	switch ( v.dataType )
 	{
 	case VAR_TYPE_STRING:
@@ -49,7 +51,11 @@ plcbit varPopulateMemberNames( plcstring * VariableName, unsigned char prefix )
 				}
 			}
 			else{
-				strncpy( (void*)v.address, VariableName + prefix, v.length);
+				int len = strlen(variableName);
+				if( variableName[ len - 2] == '.' && variableName[ len - 1] == '_'){
+					variableName[ len - 2] = 0;
+				}
+				strncpy( (void*)v.address, variableName + prefix, v.length);
 			}
 		break;
 	case VAR_TYPE_STRUCT:
@@ -57,7 +63,9 @@ plcbit varPopulateMemberNames( plcstring * VariableName, unsigned char prefix )
 			strcpy( variableName, VariableName);
 			strncat( variableName,".", sizeof(variableName) );
 			strncat( variableName, memberName, sizeof(variableName));
-			varPopulateMemberNames( variableName, prefix );			
+			if( varPopulateMemberNames( variableName, prefix ) ){
+				break;
+			}
 		}
 		break;	
 	case VAR_TYPE_ARRAY_OF_STRUCT:
@@ -67,10 +75,15 @@ plcbit varPopulateMemberNames( plcstring * VariableName, unsigned char prefix )
 			itoa(memberIndex, arrayIndex, 10);	
 			strncat( variableName, arrayIndex, sizeof(variableName));
 			strncat( variableName,"]", sizeof(variableName) );
-			varPopulateMemberNames( variableName, prefix );			
+			if( varPopulateMemberNames( variableName, prefix ) ){
+				break;			
+			}
 		}
 		break;	
 	default:
 		break;
 	}
+
+	return 0;
+
 }
