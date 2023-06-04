@@ -33,6 +33,9 @@ plcbit variableIsArray(varGetAllVars_typ* t);
 plcbit setCheckGlobal(varGetAllVars_typ* t);
 plcbit resetCheckGlobal(varGetAllVars_typ* t);
 plcbit checkGlobal(varGetAllVars_typ* t);
+plcbit setIsGlobal(varGetAllVars_typ* t);
+plcbit resetIsGlobal(varGetAllVars_typ* t);
+plcbit isGlobal(varGetAllVars_typ* t);
 
 plcbit isUniqueVar(varGetAllVars_typ* t);
 plcbit setAsUniqueVar(varGetAllVars_typ* t);

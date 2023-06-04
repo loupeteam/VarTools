@@ -59,6 +59,7 @@ void varGetAllVars(varGetAllVars_typ* t)
 			// Set rest of system bits that need to know next var
 			t->Internal.moList.first = t->Internal.NextVariable; // moList needs to know to start back at begining
 			setCheckGlobal(t); // Every new variable we need to check for global
+			resetIsGlobal(t);
 			
 			t->Internal.NextVariable = 0;
 			
@@ -73,22 +74,46 @@ void varGetAllVars(varGetAllVars_typ* t)
 			t->Internal.validVar = checkValidVar(t);
 			resetCheckGlobal(t);
 			
-			if(!t->Internal.validVar) {
-				// getNextVariable returns all variables without a task perfix. So you can get duplicate variables (ex multiple Configurations)
-				// So we record all varables found so we can see if we already checked this one
-				// Because global variables cant exist in mulitple tasks we dont need to keep track of those
-				if(isUniqueVar(t))
-					setAsUniqueVar(t);
-				else
-					t->Internal.NextVariable = 1; // Skip this var because we already say this variable
-				
+			// getNextVariable returns all variables without a task perfix. So you can get duplicate variables (ex multiple Configurations)
+			// So we record all varables found so we can see if we already checked this one
+			// Because global variables cant exist in mulitple tasks we dont need to keep track of those
+			if(isUniqueVar(t)) {
+				setAsUniqueVar(t);
+			} else {
+				t->Internal.NextVariable = 1; // Skip this var because we already say this variable
 				continue;
 			}
 			
-			t->Internal.NextVariable = 1; // Set new varaible here becuase if something is global then its in each task as well but we just want to say global
+			if(!t->Internal.validVar) {	
+				continue;
+			}
+			
+			setIsGlobal(t);
+			
+			if(variableIsStructure(t) && t->ExpandStructs || variableIsArray(t) && !t->CondenseArrays) {
+				goDownALevel(t);
+			}
+			else if(variableIsArray(t) && t->CondenseArrays) {
+				// tODO: Condense array to just [i]
+				strcat(t->Variable.name, "[");
+				strcat(t->Variable.name, "]");
+			}
+			
+			if(!variableIsPrimitive(t) && t->PrimitivesOnly) {
+				t->Internal.validVar = 0;
+			}
+			
+			if(atTopLevel(t))
+				t->Internal.NextVariable = 1; // Set new varaible here becuase if something is global then its in each task as well but we just want to say global
 			
 		}
 		else if(atTopLevel(t)) {
+			if(isGlobal(t)) {
+				// We can get here for global structures or global array of strucutres
+				t->Internal.NextVariable = 1; // Set new varaible here becuase if something is global then its in each task as well but we just want to say global
+				continue;
+			}
+			
 			getNextTask(t);
 			
 			if(isError(t)) continue;
@@ -104,8 +129,13 @@ void varGetAllVars(varGetAllVars_typ* t)
 			
 			if(!t->Internal.validVar) continue;
 			
-			if(variableIsStructure(t) && t->ExpandStructs) {
+			if(variableIsStructure(t) && t->ExpandStructs || variableIsArray(t) && !t->CondenseArrays) {
 				goDownALevel(t);
+			}
+			else if(variableIsArray(t) && t->CondenseArrays) {
+				// tODO: Condense array to just [i]
+				strcat(t->Variable.name, "[");
+				strcat(t->Variable.name, "]");
 			}
 			
 			if(!variableIsPrimitive(t) && t->PrimitivesOnly) {
@@ -115,6 +145,7 @@ void varGetAllVars(varGetAllVars_typ* t)
 		}
 		else {
 			getMembers(t);
+			
 			while(outOfMemebers(t) && !atTopLevel(t)) {
 				goUpALevel(t);
 				getMembers(t);

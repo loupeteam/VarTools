@@ -57,7 +57,7 @@ TYPE
 		dimension : UINT;
 	END_STRUCT;
 	varGetAllVars_internal_typ : 	STRUCT 
-		iVar : UINT := 65535;
+		iVar : UDINT := 65535;
 		iDeep : UINT;
 		iMember : ARRAY[0..49]OF UINT;
 		Browser : variableBrowser;
@@ -68,8 +68,9 @@ TYPE
 		AppMoName : STRING[32];
 		MoName : STRING[12];
 		checkGlobal : BOOL;
+		isGlobal : BOOL;
 		validVar : BOOL;
 		numUniqueVars : UDINT;
-		uniqueVars : ARRAY[0..999]OF STRING[VAR_STRLEN_NAME];
+		uniqueVars : ARRAY[0..1999]OF STRING[VAR_STRLEN_NAME];
 	END_STRUCT;
 END_TYPE

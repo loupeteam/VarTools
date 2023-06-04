@@ -26,7 +26,7 @@ plcbit handleErrors(varGetAllVars_typ* t) {
 
 // Variable Fns
 plcbit getNextVariable(varGetAllVars_typ* t) {
-	UINT nextVarIndex;
+	UDINT nextVarIndex;
 	UINT xListStatus = 0;
 	nextVarIndex = t->Internal.iVar+1;
 	xListStatus = PV_xlist(t->Internal.iVar, (UDINT)&nextVarIndex, &t->Internal.xList);
@@ -65,6 +65,10 @@ plcbit checkValidVar(varGetAllVars_typ* t) {
 plcbit setCheckGlobal(varGetAllVars_typ* t) 	{ return t->Internal.checkGlobal = 1;}
 plcbit resetCheckGlobal(varGetAllVars_typ* t) 	{ return t->Internal.checkGlobal = 0;}
 plcbit checkGlobal(varGetAllVars_typ* t) 		{ return t->Internal.checkGlobal;}
+
+plcbit setIsGlobal(varGetAllVars_typ* t) 	{ return t->Internal.isGlobal = 1;}
+plcbit resetIsGlobal(varGetAllVars_typ* t) 	{ return t->Internal.isGlobal = 0;}
+plcbit isGlobal(varGetAllVars_typ* t) 		{ return t->Internal.isGlobal;}
 
 plcbit isUniqueVar(varGetAllVars_typ* t) {
 	if(t->Internal.numUniqueVars == 0) return 1;
