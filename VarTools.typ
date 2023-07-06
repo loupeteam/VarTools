@@ -55,5 +55,6 @@ TYPE
 		dataType : UDINT;
 		length : UDINT;
 		dimension : UINT;
+		changed : BOOL;
 	END_STRUCT;
 END_TYPE

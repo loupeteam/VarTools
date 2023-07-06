@@ -372,7 +372,7 @@ unsigned short varSetValue(unsigned long pVariable)
 		
 		case VAR_TYPE_WSTRING: 
 			
-			string2wstring( (UDINT)ipVariable->address, (UDINT)ipVariable->value, ipVariable->length-1 );
+			string2wstring( ipVariable->address, (UDINT)ipVariable->value, ipVariable->length-1 );
 		
 			break;
 	
