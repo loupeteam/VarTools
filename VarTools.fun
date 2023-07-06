@@ -96,3 +96,20 @@ FUNCTION_BLOCK variableBrowser (*TODO: Add your comment here*) (*$GROUP=User,$CA
 		iMemberIndex : USINT;
 	END_VAR
 END_FUNCTION_BLOCK
+
+FUNCTION_BLOCK varGetAllVars
+	VAR_INPUT
+		Execute : BOOL;
+		AcknowledgeError : BOOL;
+		PrimitivesOnly : BOOL;
+		ExpandStructs : BOOL;
+		CondenseArrays : BOOL;
+	END_VAR
+	VAR_OUTPUT
+		Status : UINT;
+		Variable : varVariable_typ;
+	END_VAR
+	VAR
+		Internal : varGetAllVars_internal_typ;
+	END_VAR
+END_FUNCTION_BLOCK
