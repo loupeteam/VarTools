@@ -21,7 +21,13 @@ jobs:
         with:
           repository: loupeteam/AsGithubAction
           ref: main
-          path: tools/AsGithubAction          
+          path: AsGithubAction          
+          token: ${{ secrets.GA_PAT }} # `GH_PAT` is a secret that contains your PAT
+      - uses: actions/checkout@v4
+        with:
+          repository: loupeteam/ASPython
+          ref: master
+          path: AsPython          
           token: ${{ secrets.GA_PAT }} # `GH_PAT` is a secret that contains your PAT
       - uses: actions/setup-node@v3
         with:
