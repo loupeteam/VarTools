@@ -15,9 +15,14 @@ jobs:
       packages: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          path: main          
       - uses: actions/checkout@v4
         with:
           repository: loupeteam/AsGithubAction
+          ref: main
+          path: tools/AsGithubAction          
+          token: ${{ secrets.GH_PAT }} # `GH_PAT` is a secret that contains your PAT
       - uses: actions/setup-node@v3
         with:
           node-version: 16
