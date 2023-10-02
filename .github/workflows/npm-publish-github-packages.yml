@@ -22,7 +22,7 @@ jobs:
           repository: loupeteam/AsGithubAction
           ref: main
           path: tools/AsGithubAction          
-          token: ${{ secrets.GH_PAT }} # `GH_PAT` is a secret that contains your PAT
+          token: ${{ secrets.GA_PAT }} # `GH_PAT` is a secret that contains your PAT
       - uses: actions/setup-node@v3
         with:
           node-version: 16
