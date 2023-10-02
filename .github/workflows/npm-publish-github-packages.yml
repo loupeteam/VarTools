@@ -33,3 +33,7 @@ jobs:
         with:
           node-version: 16
           registry-url: https://npm.pkg.github.com/
+      - uses: ./AsGithubAction
+        with:
+          milliseconds: 2000
+      - run: python.exe ./AsPython/CmdLineBuild.py
