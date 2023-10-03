@@ -39,6 +39,6 @@ jobs:
       - run: python.exe ./AsPython/CmdLineBuild.py ./main/example/AsProject/AsProject.apj -c Intel ARM -bm Rebuild --logLevel DEBUG
       - run: python.exe ./AsPython/CmdLineExportLib.py ./main/example/AsProject/AsProject.apj -dest ./libs -c Intel ARM -wl vartools -l DEBUG -o -bm "None"
       - run: | 
-          cd ./libs/vartool  
+          cd ./libs/vartools  
           lpm init -s -lib -nc
           lpm publish -s -nc
