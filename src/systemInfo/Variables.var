@@ -1,0 +1,3 @@
+VAR
+	List : ARRAY[0..100] OF STRING[80];
+END_VAR

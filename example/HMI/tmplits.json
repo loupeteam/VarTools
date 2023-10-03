@@ -1,0 +1,14 @@
+{
+    "startPage" : {
+        "container" : "main",
+        "name": "main"
+    },
+    "pages": [
+        {
+            "name": "main",
+            "file": "../views/main.handlebars"
+        }
+    ],
+    "libraries":[
+    ]
+}

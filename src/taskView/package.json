@@ -1,0 +1,11 @@
+{
+  "name": "@loupeteam/tmplits-taskview",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/loupeteam/tmplits.git"
+  },
+  "dependencies": {
+    "@loupeteam/tmplits": "*"
+  }
+}
