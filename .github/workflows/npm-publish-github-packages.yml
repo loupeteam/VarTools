@@ -39,6 +39,7 @@ jobs:
       - run: python.exe ./AsPython/CmdLineBuild.py ./main/example/AsProject/AsProject.apj -c Intel ARM -bm Rebuild --logLevel DEBUG
       - run: python.exe ./AsPython/CmdLineExportLib.py ./main/example/AsProject/AsProject.apj -dest ./libs -c Intel ARM -wl vartools -l DEBUG -o -bm "None"
       - run: | 
-          cd ./libs/vartools  
+          cd ./libs/vartools
+          npm set //npm.pkg.github.com/:_authToken $GITHUB_TOKEN  
           lpm init -s -lib -nc
           lpm publish -s -nc
