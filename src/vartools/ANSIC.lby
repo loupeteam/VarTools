@@ -13,6 +13,7 @@
     <File Description="Set the value of a variable from a string">varSetValue.c</File>
     <File Description="Set the value of a variable it's own name">varPopulateMemberNames.c</File>
     <File Description="Get a list of all local and global variables with a given name">varGetVariableList.c</File>
+    <File Description="Get a list of all tasks on a system">varGetTaskList.c</File>
     <File Description="Set the value of a variable from a string">varVariableWatch.c</File>
     <File>variableBrowser.c</File>
     <File Description="Force refresh of variable information in next getValue call">varRefresh.c</File>

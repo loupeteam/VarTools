@@ -4,11 +4,29 @@
   <TaskClass Name="Cyclic#1" />
   <TaskClass Name="Cyclic#2" />
   <TaskClass Name="Cyclic#3" />
-  <TaskClass Name="Cyclic#4" />
+  <TaskClass Name="Cyclic#4">
+    <Task Name="TestTask1" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
+    <Task Name="TestTask2" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
+    <Task Name="TestTask3" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
+    <Task Name="TestTask4" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
+    <Task Name="TestTask5" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
+    <Task Name="TestTask6" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
+    <Task Name="TestTask7" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
+    <Task Name="TestTask8" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
+    <Task Name="TestTask9" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
+    <Task Name="TestTask10" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
+    <Task Name="TestTask11" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
+    <Task Name="TestTask12" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
+    <Task Name="TestTask13" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
+    <Task Name="TestTask14" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
+    <Task Name="TestTask15" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
+    <Task Name="TestTask16" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
+  </TaskClass>
   <TaskClass Name="Cyclic#5" />
   <TaskClass Name="Cyclic#6" />
   <TaskClass Name="Cyclic#7" />
   <TaskClass Name="Cyclic#8">
+    <Task Name="webHMIProg" Source="webHMI.webHMIProg.prg" Memory="UserROM" Language="IEC" Debugging="true" />
     <Task Name="systemInfo" Source="systemInfo.prg" Memory="UserROM" Language="IEC" Debugging="true" />
   </TaskClass>
   <Binaries>
@@ -25,12 +43,20 @@
     <BinaryObject Name="Role" Source="" Memory="UserROM" Language="Binary" />
   </Binaries>
   <Libraries>
-    <LibraryObject Name="stringext" Source="Libraries.Loupe.stringext.lby" Memory="UserROM" Language="Binary" Debugging="true" />
+    <LibraryObject Name="omjson" Source="Libraries.Loupe.omjson.lby" Memory="UserROM" Language="Binary" Debugging="true" />
     <LibraryObject Name="astime" Source="Libraries._AS.astime.lby" Memory="UserROM" Language="binary" Debugging="true" />
     <LibraryObject Name="runtime" Source="Libraries._AS.runtime.lby" Memory="UserROM" Language="binary" Debugging="true" />
     <LibraryObject Name="AsBrStr" Source="Libraries._AS.AsBrStr.lby" Memory="UserROM" Language="binary" Debugging="true" />
     <LibraryObject Name="AsBrWStr" Source="Libraries._AS.AsBrWStr.lby" Memory="UserROM" Language="binary" Debugging="true" />
-    <LibraryObject Name="vartools" Source="Libraries.Loupe.vartools.lby" Memory="UserROM" Language="ANSIC" Debugging="true" />
     <LibraryObject Name="sys_lib" Source="Libraries._AS.sys_lib.lby" Memory="UserROM" Language="binary" Debugging="true" />
+    <LibraryObject Name="AsHttp" Source="Libraries._AS.AsHttp.lby" Memory="UserROM" Language="binary" Debugging="true" />
+    <LibraryObject Name="AsGuard" Source="Libraries._AS.AsGuard.lby" Memory="UserROM" Language="binary" Debugging="true" />
+    <LibraryObject Name="AsTCP" Source="Libraries._AS.AsTCP.lby" Memory="UserROM" Language="binary" Debugging="true" />
+    <LibraryObject Name="standard" Source="Libraries._AS.standard.lby" Memory="UserROM" Language="binary" Debugging="true" />
+    <LibraryObject Name="vartools" Source="vartools.lby" Memory="UserROM" Language="ANSIC" Debugging="true" />
+    <LibraryObject Name="stringext" Source="Libraries.Loupe.stringext.lby" Memory="UserROM" Language="Binary" Debugging="true" />
+    <LibraryObject Name="databuffer" Source="Libraries.Loupe.databuffer.lby" Memory="UserROM" Language="Binary" Debugging="true" />
+    <LibraryObject Name="tcpcomm" Source="Libraries.Loupe.tcpcomm.lby" Memory="UserROM" Language="Binary" Debugging="true" />
+    <LibraryObject Name="bodyguard" Source="Libraries.Loupe.bodyguard.lby" Memory="UserROM" Language="Binary" Debugging="true" />
   </Libraries>
 </SwConfiguration>

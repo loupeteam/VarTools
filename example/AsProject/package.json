@@ -10,8 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@loupeteam/omjson": "^1.3.8",
     "@loupeteam/stringext": "^0.14.4",
-    "@loupeteam/vartools": "^0.11.3"
+    "@loupeteam/vartools": "^0.11.3",
+    "@loupeteam/webhmiserverpkg": "^0.1.0"
   },
   "lpmConfig": {
     "deploymentConfigs": [],

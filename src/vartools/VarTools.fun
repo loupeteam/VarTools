@@ -54,6 +54,13 @@ FUNCTION varGetVariableList : UINT (*Get a list of all local and global variable
 	END_VAR
 END_FUNCTION
 
+FUNCTION varGetTaskListJson : UINT (*Get a list of all local and global variables with a given name*) (*$GROUP=User*)
+	VAR_INPUT
+		List : STRING[80];
+		size : UDINT;
+	END_VAR
+END_FUNCTION
+
 FUNCTION varPopulateMemberNames : BOOL
 	VAR_INPUT
 		PVName : STRING[80];
