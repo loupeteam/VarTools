@@ -1,27 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <?AutomationStudio FileVersion="4.9"?>
 <SwConfiguration CpuAddress="SL1" xmlns="http://br-automation.co.at/AS/SwConfiguration">
-  <TaskClass Name="Cyclic#1" />
+  <TaskClass Name="Cyclic#1">
+    <Task Name="TestTask3" Source="TestTask2.prg" Memory="UserROM" Language="IEC" Debugging="true" />
+    <Task Name="TestTask4" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
+    <Task Name="TestTask5" Source="TestTask2.prg" Memory="UserROM" Language="IEC" Debugging="true" />
+    <Task Name="TestTask6" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
+    <Task Name="TestTask2" Source="TestTask2.prg" Memory="UserROM" Language="IEC" Debugging="true" />
+    <Task Name="TestTask1" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
+  </TaskClass>
   <TaskClass Name="Cyclic#2" />
   <TaskClass Name="Cyclic#3" />
-  <TaskClass Name="Cyclic#4">
-    <Task Name="TestTask1" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
-    <Task Name="TestTask2" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
-    <Task Name="TestTask3" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
-    <Task Name="TestTask4" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
-    <Task Name="TestTask5" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
-    <Task Name="TestTask6" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
-    <Task Name="TestTask7" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
-    <Task Name="TestTask8" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
-    <Task Name="TestTask9" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
-    <Task Name="TestTask10" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
-    <Task Name="TestTask11" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
-    <Task Name="TestTask12" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
-    <Task Name="TestTask13" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
-    <Task Name="TestTask14" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
-    <Task Name="TestTask15" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
-    <Task Name="TestTask16" Source="TestTask1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
-  </TaskClass>
+  <TaskClass Name="Cyclic#4" />
   <TaskClass Name="Cyclic#5" />
   <TaskClass Name="Cyclic#6" />
   <TaskClass Name="Cyclic#7" />
@@ -58,5 +48,6 @@
     <LibraryObject Name="databuffer" Source="Libraries.Loupe.databuffer.lby" Memory="UserROM" Language="Binary" Debugging="true" />
     <LibraryObject Name="tcpcomm" Source="Libraries.Loupe.tcpcomm.lby" Memory="UserROM" Language="Binary" Debugging="true" />
     <LibraryObject Name="bodyguard" Source="Libraries.Loupe.bodyguard.lby" Memory="UserROM" Language="Binary" Debugging="true" />
+    <LibraryObject Name="asiodiag" Source="" Memory="UserROM" Language="Binary" Debugging="true" />
   </Libraries>
 </SwConfiguration>

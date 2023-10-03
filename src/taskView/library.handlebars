@@ -1,2 +1,148 @@
-{{!-- DO NOT DELETE THIS FILE - Doing so will cause 404 errors on the client side which will not break anything, but will throw errors in the console. --}}
-<h1>Hello World!</h1>
+<script id="tasklist-tmpl" type="text/x-handlebars-template">
+    <style>
+        .task-scope{
+            display: inline-flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            align-items: flex-start;
+            align-content: flex-start;
+        }
+        .task-box{
+            border: 3px;
+            border-style: solid;
+            border-color: #000000;
+            margin: 3px;
+            border-radius: 5px;            
+            background-color: lightslategray;
+            height: 100%;
+            overflow: auto;
+            padding: 10px;
+        }
+        .task-list{
+            display: inline-block;
+            padding-right: 10px;
+        }
+        .task-details{
+            display: inline-block;
+
+        }
+
+        .task-item{
+            margin: 5px;
+            padding: 5px;
+            border-radius: 5px;
+            background-color: lightgray;
+            cursor: pointer;
+        }
+        .task-item.selected{
+            background-color: bisque;
+        }
+        .struct-level{
+            margin-left: 20px;
+        }
+        .btn-debug{
+            padding: 3px;
+            margin: 3px;
+        }
+    </style>
+    <div class="task-scope" data-read-group='taskdebug'>
+        {{#T 'Columns' style="grid-template-columns:repeat(2, auto)"}}
+        <div class="task-list task-box">
+            {{#each ..}}
+                <div class='task-item' onclick="selectTask( this, '{{@key}}')">{{@key}}</div>
+            {{/each}}
+        </div>
+        <div class="task-details  task-box">
+
+        </div>
+        {{/T}}
+    </div>    
+</script>
+<script id="taskdetails-tmpl" type="text/x-handlebars-template">
+    {{> struct-tmpl}}
+</script>
+
+<script id="struct-tmpl" type="text/x-handlebars-template">
+    {{#each .}}
+        {{! check if there are any members }}
+        {{#ifEquals @key 'cmd' }}
+            <h3>
+                Commands
+            </h3>
+            <div class="struct-level">
+            {{> struct-cmd-tmpl }}
+            </div>
+        {{else}}
+            {{#ifEquals @key 'par' }}
+                <h3>
+                    Parameters
+                </h3>
+                <div class="struct-level">
+                {{> struct-par-tmpl}}
+                </div>
+            {{else}}
+                {{#ifEquals @key 'out' }}
+                    {{> struct-state-tmpl}}
+                {{else}}
+                    {{#ifEquals @key 'IO' }}
+                        {{> struct-io-tmpl}}
+                    {{else}}
+                        {{#ifEquals @key 'Configuration' }}
+                            <h3>Configuration</h3>
+                            <div class="struct-level">
+                            {{> struct-par-tmpl}}
+                            </div>
+                        {{else}}
+                            {{> struct-tmpl }}
+                        {{/ifEquals}}
+                    {{/ifEquals}}
+                {{/ifEquals}}
+            {{/ifEquals}}
+        {{/ifEquals}}
+    {{/each}}
+</script>
+
+<script id="struct-cmd-tmpl" type="text/x-handlebars-template">
+<table>
+    {{#T 'Columns' minColumns=6 maxColumns=6}}
+        {{#each ..}}
+        <button class="webhmi-btn-toggle webhmi-led btn-debug" data-var-name={{VariablePath}}>{{@key}}</button>
+        {{/each}}
+    {{/T}}
+</table>
+</script>
+<script id="struct-par-tmpl" type="text/x-handlebars-template">
+    {{#T 'Columns' minColumns=8 maxColumns=8}}
+        {{#each ..}}
+        <div>{{@key}}</div><input class="webhmi-text-value" data-var-name={{VariablePath}}>
+        {{/each}}
+    {{/T}}
+</script>
+<script id="struct-state-tmpl" type="text/x-handlebars-template">
+<h3>
+Status:
+</h3>
+<div class="webhmi-text-value" data-var-name={{VariablePath}}>
+
+</div>
+</script>
+<script id="struct-io-tmpl" type="text/x-handlebars-template">
+{{> struct-io-struct-tmpl }}
+</script>
+<script id="struct-io-struct-tmpl" type="text/x-handlebars-template">
+    {{#each .}}
+        {{! check if there are any members }}
+        {{#ifEquals @key 'out' }}
+<h3>Outputs:</h3>        
+            {{> struct-cmd-tmpl }}
+        {{else}}
+            {{#ifEquals @key 'in' }}
+<h3>Inputs:</h3>                
+                {{> struct-cmd-tmpl }}
+            {{else}}
+                {{> struct-tmpl}}
+            {{/ifEquals}}
+        {{/ifEquals}}
+    {{/each}}
+</script>

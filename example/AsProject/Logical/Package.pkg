@@ -8,6 +8,7 @@
     <Object Type="Package">webHMI</Object>
     <Object Type="Program" Language="IEC" Reference="true">..\..\src\systemInfo\IEC.prg</Object>
     <Object Type="Program" Language="IEC">TestTask1</Object>
+    <Object Type="Program" Language="IEC">TestTask2</Object>
     <Object Type="Library" Language="ANSIC" Reference="true">C:\Users\joshpolansky\Documents\clients\loupe\libraries\vt\src\vartools\ANSIC.lby</Object>
   </Objects>
 </Package>

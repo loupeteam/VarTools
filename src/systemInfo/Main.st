@@ -8,7 +8,7 @@ END_PROGRAM
 
 PROGRAM _CYCLIC
 
-	varGetTaskListJson( List[0], SIZEOF(List) );
+	varGetTaskList( List[0], SIZEOF(List) );
 	
 	 
 END_PROGRAM

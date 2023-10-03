@@ -54,7 +54,7 @@ FUNCTION varGetVariableList : UINT (*Get a list of all local and global variable
 	END_VAR
 END_FUNCTION
 
-FUNCTION varGetTaskListJson : UINT (*Get a list of all local and global variables with a given name*) (*$GROUP=User*)
+FUNCTION varGetTaskList : UINT (*Get a list of all tasks running on the system*) (*$GROUP=User*)
 	VAR_INPUT
 		List : STRING[80];
 		size : UDINT;

@@ -6,7 +6,7 @@ END_PROGRAM
 
 PROGRAM _CYCLIC
 
-	task.out.state1:= task.in.cmd.go;
+	task.out.state3:= task.in.cmd.go;
 	 
 END_PROGRAM
 

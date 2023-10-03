@@ -15,25 +15,26 @@ TYPE
 		go3 : BOOL;
 		go4 : BOOL;
 		go5 : BOOL;
+		go6 : BOOL;
+		go7 : BOOL;
+		go8 : BOOL;
+		go9 : BOOL;
+		go10 : BOOL;
+		go11 : BOOL;
+		go12 : BOOL;
 	END_STRUCT;
 	task_par_typ : 	STRUCT 
 		far1 : REAL;
-		far2 : REAL;
-		far3 : REAL;
 		far4 : REAL;
 		far5 : REAL;
 		far : REAL;
 	END_STRUCT;
 	task_out_typ : 	STRUCT 
+		state4 : task_state_typ;
 		state : task_state_typ;
-		state1 : INT;
-		state2 : INT;
 		state3 : INT;
 	END_STRUCT;
 	task_state_typ : 	STRUCT 
-		state1 : INT;
-		state2 : INT;
-		state3 : INT;
 		state4 : INT;
 		state : INT;
 	END_STRUCT;
@@ -42,11 +43,9 @@ TYPE
 		out : io_out_typ;
 	END_STRUCT;
 	io_in_typ : 	STRUCT 
-		top : BOOL;
 		bottom : BOOL;
 	END_STRUCT;
 	io_out_typ : 	STRUCT 
-		up : BOOL;
 		down : BOOL;
 	END_STRUCT;
 	configuration_typ : 	STRUCT 

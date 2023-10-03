@@ -33,7 +33,7 @@
 
 // DONE passes first tests
 
-unsigned short varGetTaskListJson(plcstring* List, unsigned long size)
+unsigned short varGetTaskList(plcstring* List, unsigned long size)
 {
 	
 	//structure to look through data objects
