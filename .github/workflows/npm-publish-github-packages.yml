@@ -29,6 +29,12 @@ jobs:
           ref: feature/libraryRefs
           path: AsPython          
           token: ${{ secrets.GA_PAT }} # `GH_PAT` is a secret that contains your PAT
+      - uses: actions/checkout@v4
+        with:
+          repository: loupeteam/LPM
+          ref: develop
+          path: LPM          
+          token: ${{ secrets.GA_PAT }} # `GH_PAT` is a secret that contains your PAT
       - uses: actions/setup-node@v3
         with:
           node-version: 16
@@ -40,6 +46,5 @@ jobs:
       - run: python.exe ./AsPython/CmdLineExportLib.py ./main/example/AsProject/AsProject.apj -dest ./libs -c Intel ARM -wl vartools -l DEBUG -o -bm "None"
       - run: | 
           cd ./libs/vartools
-          npm set //npm.pkg.github.com/:_authToken $GITHUB_TOKEN  
-          lpm init -s -lib -nc
-          lpm publish -s -nc
+          ../../LPM/src/lpm.py init -s -lib -nc
+          ../../LPM/src/lpm.py publish -s -nc
