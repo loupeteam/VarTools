@@ -12,18 +12,30 @@ jobs:
     runs-on: self-hosted
     strategy:
       matrix:
-        repository: [loupeteam/AsGithubAction, loupeteam/ASPython, loupeteam/LPM]
-        ref: [main, feature/libraryRefs, develop]
-        path: [AsGithubAction, AsPython, LPM]
+        dependency: [{
+                      repo:loupeteam/AsGithubAction,
+                      ref:main,
+                      path:AsGithubAction
+                    }, 
+                    {
+                      repo:loupeteam/ASPython, 
+                      ref:feature/libraryRefs, 
+                      path:AsPython
+                    }, 
+                    {
+                      repo:loupeteam/LPM, 
+                      ref:develop, 
+                      path:LPM
+                    }]
     permissions:
       contents: read
       packages: write
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: ${{ matrix.repository }}
-          ref: ${{ matrix.ref }}
-          path: ${{ matrix.path }}
+          repository: ${{ matrix.dependency.repo }}
+          ref: ${{ matrix.dependency.ref }}
+          path: ${{ matrix.dependency.path }}
           token: ${{ secrets.GA_PAT }} # `GH_PAT` is a secret that contains your PAT
 
   build:
