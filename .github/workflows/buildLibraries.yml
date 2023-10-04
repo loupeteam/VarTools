@@ -11,7 +11,7 @@ jobs:
     runs-on: self-hosted
     strategy:
       matrix:
-        dependency: ${{fromJson('[{"repo":"loupeteam/AsGithubAction","ref":"main","path":"AsGithubAction"},{"repo":"loupeteam/ASPython", "ref":"feature/libraryRefs","path":"AsPython"}, {"repo":"loupeteam/LPM", "ref":"develop", "path":"LPM"}]')}}
+        dependency: ${{fromJson('[{"path":"main},{"repo":"loupeteam/AsGithubAction","ref":"main","path":"AsGithubAction"},{"repo":"loupeteam/ASPython", "ref":"feature/libraryRefs","path":"AsPython"}, {"repo":"loupeteam/LPM", "ref":"develop", "path":"LPM"}]')}}
     permissions:
       contents: read
       packages: write
@@ -23,49 +23,19 @@ jobs:
           path: ${{ matrix.dependency.path }}
           token: ${{ secrets.GA_PAT }} # `GH_PAT` is a secret that contains your PAT
 
-  dependsV2:
-    runs-on: self-hosted
-    strategy:
-      matrix:
-        dependency: [main, AsGithubAction, ASPython, LPM]
-        includes:
-        - dependency: main
-          path: main
-        - dependency: AsGithubAction
-          repo: loupeteam/AsGithubAction
-          ref: main
-          path: AsGithubAction
-        - dependency: ASPython
-          repo: loupeteam/ASPython
-          ref: feature/libraryRefs
-          path: AsPython
-        - dependency: LPM
-          repo: loupeteam/LPM
-          ref: develop
-          path: LPM
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GA_PAT }} # `GH_PAT` is a secret that contains your PAT
-          path: ${{ matrix.path }}
-          repository: ${{ matrix.repo }}
-          ref: ${{ matrix.ref }}
                   
-  clone:
-    runs-on: self-hosted
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          path: main          
+#  clone:
+#    runs-on: self-hosted
+#    permissions:
+#      contents: read
+#      packages: write
+#    steps:
+#      - uses: actions/checkout@v4
+#        with:
+#          path: main          
 
   build:
-    needs: [clone,depends]
+    needs: [depends]
     runs-on: self-hosted
     permissions:
       contents: read
