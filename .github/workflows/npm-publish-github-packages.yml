@@ -46,6 +46,8 @@ jobs:
       - run: python.exe ./AsPython/CmdLineExportLib.py ./main/example/AsProject/AsProject.apj -dest ./libs -c Intel ARM -wl vartools -l DEBUG -o -bm "None"
       - run: | 
           cd ./libs/vartools
+          python -m venv ../../venv
+          ../../venv/Scripts/activate.bat
           pip install -r ../../LPM/requirements.txt
           python.exe ../../LPM/src/lpm.py init -s -lib -nc
           python.exe ../../LPM/src/lpm.py publish -s -nc
