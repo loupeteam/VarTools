@@ -23,18 +23,7 @@ jobs:
           path: ${{ matrix.dependency.path }}
           token: ${{ secrets.GA_PAT }} # `GH_PAT` is a secret that contains your PAT
 
-                  
-#  clone:
-#    runs-on: self-hosted
-#    permissions:
-#      contents: read
-#      packages: write
-#    steps:
-#      - uses: actions/checkout@v4
-#        with:
-#          path: main          
-
-  build:
+  buildandexport:
     needs: [depends]
     runs-on: self-hosted
     permissions:
@@ -46,29 +35,13 @@ jobs:
           node-version: 16
           registry-url: https://npm.pkg.github.com/
       - run: python.exe ./AsPython/CmdLineBuild.py ./main/example/AsProject/AsProject.apj -c Intel ARM -bm Rebuild --logLevel DEBUG
-
-  export:
-    needs: [build]
-    runs-on: self-hosted
-    permissions:
-      contents: read
-      packages: write
-    steps:
       - run: python.exe ./AsPython/CmdLineExportLib.py ./main/example/AsProject/AsProject.apj -dest ./libs -c Intel ARM -wl vartools -l DEBUG -o -bm "None"
-
-  login:
-    needs: [depends]
-    runs-on: self-hosted
-    permissions:
-      contents: read
-      packages: write
-    steps:
       - uses: ./AsGithubAction
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   publish:
-    needs: [login, export]
+    needs: [buildandexport]
     runs-on: self-hosted
     strategy:
       matrix:
