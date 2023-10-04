@@ -7,17 +7,8 @@ on:
     branches: feature/runner
 
 jobs:
-  get-runner:
-    runs-on: self-hosted
-    if: ${{ always() }}
-    steps:
-      - run: echo "selected runner = ${{ runner.name }}"
-    outputs:
-     RUNNER: ${{ runner.name }}
-
   depends:
-    needs: get-runner
-    runs-on: ${{needs.get-runner.outputs.RUNNER}}
+    runs-on: self-hosted
     strategy:
       matrix:
         dependency: ${{fromJson('[{"repo":"loupeteam/AsGithubAction","ref":"main","path":"AsGithubAction"},{"repo":"loupeteam/ASPython", "ref":"feature/libraryRefs","path":"AsPython"}, {"repo":"loupeteam/LPM", "ref":"develop", "path":"LPM"}]')}}
@@ -33,8 +24,7 @@ jobs:
           token: ${{ secrets.GA_PAT }} # `GH_PAT` is a secret that contains your PAT
       
   clone:
-    needs: get-runner
-    runs-on: ${{needs.get-runner.outputs.RUNNER}}
+    runs-on: self-hosted
     permissions:
       contents: read
       packages: write
@@ -44,8 +34,8 @@ jobs:
           path: main          
 
   build:
-    needs: [get-runner,clone,depends]
-    runs-on: ${{needs.get-runner.outputs.RUNNER}}
+    needs: [clone,depends]
+    runs-on: self-hosted
     permissions:
       contents: read
       packages: write
@@ -57,8 +47,8 @@ jobs:
       - run: python.exe ./AsPython/CmdLineBuild.py ./main/example/AsProject/AsProject.apj -c Intel ARM -bm Rebuild --logLevel DEBUG
 
   export:
-    needs: [get-runner,build]
-    runs-on: ${{needs.get-runner.outputs.RUNNER}}
+    needs: [build]
+    runs-on: self-hosted
     permissions:
       contents: read
       packages: write
@@ -66,8 +56,8 @@ jobs:
       - run: python.exe ./AsPython/CmdLineExportLib.py ./main/example/AsProject/AsProject.apj -dest ./libs -c Intel ARM -wl vartools -l DEBUG -o -bm "None"
 
   login:
-    needs: [depends, get-runner]
-    runs-on: ${{needs.get-runner.outputs.RUNNER}}
+    needs: [depends]
+    runs-on: self-hosted
     permissions:
       contents: read
       packages: write
@@ -77,8 +67,8 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   publish:
-    needs: [login, export, get-runner]
-    runs-on: ${{needs.get-runner.outputs.RUNNER}}
+    needs: [login, export]
+    runs-on: self-hosted
     strategy:
       matrix:
         packages: [vartools]
