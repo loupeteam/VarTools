@@ -1,17 +1,22 @@
-# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
-# For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
+# This workflow will run build an AS project and publish the libraries to the github package registry
 
-name: Node.js Package
+name: Build Libraries
 
 on:
   push:
     branches: feature/runner
 
 jobs:
-  depends:
+  get-runner:
     runs-on: self-hosted
+    if: ${{ always() }}
+    outputs:
+     RUNNER: ${{ runner.name }}
+
+  depends:
+    needs: get-runner
+    runs-on: ${{needs.get-runner.outputs.RUNNER}}
     strategy:
-      max-parallel: 5
       matrix:
         dependency: ${{fromJson('[{"repo":"loupeteam/AsGithubAction","ref":"main","path":"AsGithubAction"},{"repo":"loupeteam/ASPython", "ref":"feature/libraryRefs","path":"AsPython"}, {"repo":"loupeteam/LPM", "ref":"develop", "path":"LPM"}]')}}
     permissions:
@@ -24,9 +29,10 @@ jobs:
           ref: ${{ matrix.dependency.ref }}
           path: ${{ matrix.dependency.path }}
           token: ${{ secrets.GA_PAT }} # `GH_PAT` is a secret that contains your PAT
-
+      
   clone:
-    runs-on: self-hosted
+    needs: get-runner
+    runs-on: ${{needs.get-runner.outputs.RUNNER}}
     permissions:
       contents: read
       packages: write
@@ -36,8 +42,8 @@ jobs:
           path: main          
 
   build:
-    runs-on: self-hosted
-    needs: [clone,depends]
+    needs: [get-runner,clone,depends]
+    runs-on: ${{needs.get-runner.outputs.RUNNER}}
     permissions:
       contents: read
       packages: write
@@ -49,8 +55,8 @@ jobs:
       - run: python.exe ./AsPython/CmdLineBuild.py ./main/example/AsProject/AsProject.apj -c Intel ARM -bm Rebuild --logLevel DEBUG
 
   export:
-    runs-on: self-hosted
-    needs: build
+    needs: [get-runner,build]
+    runs-on: ${{needs.get-runner.outputs.RUNNER}}
     permissions:
       contents: read
       packages: write
@@ -58,8 +64,8 @@ jobs:
       - run: python.exe ./AsPython/CmdLineExportLib.py ./main/example/AsProject/AsProject.apj -dest ./libs -c Intel ARM -wl vartools -l DEBUG -o -bm "None"
 
   login:
-    runs-on: self-hosted
-    needs: [depends]
+    needs: [depends, get-runner]
+    runs-on: ${{needs.get-runner.outputs.RUNNER}}
     permissions:
       contents: read
       packages: write
@@ -69,8 +75,8 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   publish:
-    needs: [login, export]
-    runs-on: self-hosted
+    needs: [login, export, get-runner]
+    runs-on: ${{needs.get-runner.outputs.RUNNER}}
     strategy:
       matrix:
         packages: [vartools]
