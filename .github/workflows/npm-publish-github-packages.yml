@@ -11,6 +11,7 @@ jobs:
   depends:
     runs-on: self-hosted
     strategy:
+      max-parallel: 5
       matrix:
         dependency: ${{fromJson('[{"repo":"loupeteam/AsGithubAction","ref":"main","path":"AsGithubAction"},{"repo":"loupeteam/ASPython", "ref":"feature/libraryRefs","path":"AsPython"}, {"repo":"loupeteam/LPM", "ref":"develop", "path":"LPM"}]')}}
     permissions:
@@ -24,9 +25,8 @@ jobs:
           path: ${{ matrix.dependency.path }}
           token: ${{ secrets.GA_PAT }} # `GH_PAT` is a secret that contains your PAT
 
-  build:
+  clone:
     runs-on: self-hosted
-    needs: depends
     permissions:
       contents: read
       packages: write
@@ -34,19 +34,32 @@ jobs:
       - uses: actions/checkout@v4
         with:
           path: main          
+
+  build:
+    runs-on: self-hosted
+    needs: [clone,depends]
+    permissions:
+      contents: read
+      packages: write
+    steps:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
           registry-url: https://npm.pkg.github.com/
       - run: python.exe ./AsPython/CmdLineBuild.py ./main/example/AsProject/AsProject.apj -c Intel ARM -bm Rebuild --logLevel DEBUG
+
+  export:
+    runs-on: self-hosted
+    needs: build
+    permissions:
+      contents: read
+      packages: write
+    steps:
       - run: python.exe ./AsPython/CmdLineExportLib.py ./main/example/AsProject/AsProject.apj -dest ./libs -c Intel ARM -wl vartools -l DEBUG -o -bm "None"
 
-  publish:
-    needs: build
+  login:
     runs-on: self-hosted
-    strategy:
-      matrix:
-        packages: [libs/vartools]
+    needs: [depends]
     permissions:
       contents: read
       packages: write
@@ -54,8 +67,19 @@ jobs:
       - uses: ./AsGithubAction
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+
+  publish:
+    needs: [login, export]
+    runs-on: self-hosted
+    strategy:
+      matrix:
+        packages: [vartools]
+    permissions:
+      contents: read
+      packages: write
+    steps:
       - run: | 
-          cd ./${{ matrix.packages }}
+          cd ./libs/${{ matrix.packages }}
           lpm init -s -lib -nc
           lpm publish -s -nc
 
