@@ -1,11 +1,12 @@
-
 PROGRAM _INIT
-	(* Insert code here *)
-	 
+	(* Insert code here *)	 
+	varGetTaskList( List[0], SIZEOF(List) );
+
 END_PROGRAM
 
 PROGRAM _CYCLIC
-	(* Insert code here *)
+
+	
 	 
 END_PROGRAM
 

@@ -1,0 +1,5 @@
+VAR
+	task : task_typ;
+	IO : io_typ;
+	Configuration : configuration_typ;
+END_VAR

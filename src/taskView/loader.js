@@ -1,9 +1,46 @@
-//DO NOT DELETE THIS FILE 
-//- Doing so will cause 404 errors on the client side which will not break anything, but will throw errors in the console.
+let taskList = {};
+machine.readVariable('systemInfo:List', function (event, data) {
+  machine[data].forEach(element => {
+    if(element == '') return;
+    taskList[element] = {}
+    machine.readVariable(element+':task', function (event, data) {
+        taskList[element] = Object.assign( taskList[element], {task:machine[data]}); 
+    })
+    machine.readVariable(element+':IO', function (event, data) {
+        taskList[element] = Object.assign( taskList[element], {IO:machine[data]}); 
+    })
+    machine.readVariable(element+':Configuration', function (event, data) {
+        taskList[element] = Object.assign( taskList[element], {Configuration:machine[data]}); 
+    })
+    updateTaskList()
+  });
+});
 
-//This file will get loaded as a javascript file (not a module), meaning you can't import other modules from here.
+function updateTaskList(){
+    document.querySelectorAll('.task-view').forEach(element => {                
+        let partial = tmplits.get('tasklist-tmpl');
+        element.innerHTML = partial(taskList);
+        
+    })
+}
+function selectTask(el, task){
+    let readgroup = machine.getReadGroup('taskdebug')
+    readgroup.data = {}
+    machine.initCyclicReadGroup('taskdebug', task+':task');
+    machine.initCyclicReadGroup('taskdebug', task+':IO');
+    machine.initCyclicReadGroup('taskdebug', task+':Configuration');
 
-//Define your tmplit functions here and they will be globally available
-//function TmplitHelloWorld(context, args){
-//    return `Hello ${context[0]}!`
-//}
+    let scope = el.closest('.task-scope')
+    scope.querySelectorAll('.task-item').forEach(element => {                
+        element.classList.remove('selected')
+    })
+    el.classList.add('selected')
+
+    scope.querySelectorAll('.task-details').forEach(element => {                
+        let partial = tmplits.get('taskdetails-tmpl');
+        let context = {};
+        context[task] = taskList[task];
+        element.innerHTML = partial(context);
+        
+    })    
+}
