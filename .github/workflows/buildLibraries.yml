@@ -11,7 +11,7 @@ jobs:
     runs-on: self-hosted
     strategy:
       matrix:
-        dependency: ${{fromJson('[{"path":"main},{"repo":"loupeteam/AsGithubAction","ref":"main","path":"AsGithubAction"},{"repo":"loupeteam/ASPython", "ref":"feature/libraryRefs","path":"AsPython"}, {"repo":"loupeteam/LPM", "ref":"develop", "path":"LPM"}]')}}
+        dependency: ${{fromJson('[{"path":"main"},{"repo":"loupeteam/AsGithubAction","ref":"main","path":"AsGithubAction"},{"repo":"loupeteam/ASPython", "ref":"feature/libraryRefs","path":"AsPython"}, {"repo":"loupeteam/LPM", "ref":"develop", "path":"LPM"}]')}}
     permissions:
       contents: read
       packages: write
