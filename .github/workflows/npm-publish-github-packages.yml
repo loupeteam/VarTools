@@ -8,8 +8,27 @@ on:
     branches: feature/runner
 
 jobs:
-  publish-main:
+  depends:
     runs-on: self-hosted
+    strategy:
+      matrix:
+        repository: [loupeteam/AsGithubAction, loupeteam/ASPython, loupeteam/LPM]
+        ref: [main, feature/libraryRefs, develop]
+        path: [AsGithubAction, AsPython, LPM]
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ matrix.repository }}
+          ref: ${{ matrix.ref }}
+          path: ${{ matrix.path }}
+          token: ${{ secrets.GA_PAT }} # `GH_PAT` is a secret that contains your PAT
+
+  build:
+    runs-on: self-hosted
+    needs: depends
     permissions:
       contents: read
       packages: write
@@ -17,24 +36,6 @@ jobs:
       - uses: actions/checkout@v4
         with:
           path: main          
-      - uses: actions/checkout@v4
-        with:
-          repository: loupeteam/AsGithubAction
-          ref: main
-          path: AsGithubAction          
-          token: ${{ secrets.GA_PAT }} # `GH_PAT` is a secret that contains your PAT
-      - uses: actions/checkout@v4
-        with:
-          repository: loupeteam/ASPython
-          ref: feature/libraryRefs
-          path: AsPython          
-          token: ${{ secrets.GA_PAT }} # `GH_PAT` is a secret that contains your PAT
-      - uses: actions/checkout@v4
-        with:
-          repository: loupeteam/LPM
-          ref: develop
-          path: LPM          
-          token: ${{ secrets.GA_PAT }} # `GH_PAT` is a secret that contains your PAT
       - uses: actions/setup-node@v3
         with:
           node-version: 16
@@ -44,10 +45,26 @@ jobs:
           milliseconds: 2000
       - run: python.exe ./AsPython/CmdLineBuild.py ./main/example/AsProject/AsProject.apj -c Intel ARM -bm Rebuild --logLevel DEBUG
       - run: python.exe ./AsPython/CmdLineExportLib.py ./main/example/AsProject/AsProject.apj -dest ./libs -c Intel ARM -wl vartools -l DEBUG -o -bm "None"
+
+  publish:
+    needs: build
+    runs-on: self-hosted
+    strategy:
+      matrix:
+        packages: [libs/vartools]
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: JS-DevTools/npm-publish@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          registry: "https://npm.pkg.github.com"
+          package: ${{ matrix.packages }}
       - run: | 
-          cd ./libs/vartools
-          # python -m venv ../../venv
-          # ../../venv/Scripts/activate.bat
-          # pip install -r ../../LPM/requirements.txt
-          python.exe ../../LPM/src/lpm.py init -s -lib -nc
-          python.exe ../../LPM/src/lpm.py publish -s -nc
+          cd ./${{ matrix.packages }}
+          lpm init -s -lib -nc
+          lpm publish -s -nc
+
+
+
