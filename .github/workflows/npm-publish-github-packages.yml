@@ -38,9 +38,6 @@ jobs:
         with:
           node-version: 16
           registry-url: https://npm.pkg.github.com/
-      - uses: ./AsGithubAction
-        with:
-          milliseconds: 2000
       - run: python.exe ./AsPython/CmdLineBuild.py ./main/example/AsProject/AsProject.apj -c Intel ARM -bm Rebuild --logLevel DEBUG
       - run: python.exe ./AsPython/CmdLineExportLib.py ./main/example/AsProject/AsProject.apj -dest ./libs -c Intel ARM -wl vartools -l DEBUG -o -bm "None"
 
@@ -54,11 +51,9 @@ jobs:
       contents: read
       packages: write
     steps:
-      - uses: JS-DevTools/npm-publish@v2
+      - uses: ./AsGithubAction
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          registry: "https://npm.pkg.github.com"
-          package: ${{ matrix.packages }}
       - run: | 
           cd ./${{ matrix.packages }}
           lpm init -s -lib -nc
