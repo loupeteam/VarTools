@@ -1,13 +1,11 @@
-/*******************************************************************
- * COPYRIGHT --  
- ********************************************************************
- * Library: VarTools
+/*
  * File: varRefresh.c
- * Author: Lawrence
- * Created: April 9, 2020
- ********************************************************************
- * Implementation of library VarTools
- ********************************************************************/
+ * Copyright (c) 2023 Loupe
+ * https://loupe.team
+ * 
+ * This file is part of VarTools, licensed under the MIT License.
+ * 
+ */
 
 #include <bur/plctypes.h>
 #ifdef __cplusplus

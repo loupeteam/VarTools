@@ -1,13 +1,11 @@
-/********************************************************************
- * COPYRIGHT --  
- ********************************************************************
- * Library: VarTools
- * File: varSetValue.c
- * Author: davidblackburn
- * Created: June 12, 2014
- ********************************************************************
- * Implementation of library VarTools
- ********************************************************************/
+/*
+ * File: varVariableWatch.c
+ * Copyright (c) 2023 Loupe
+ * https://loupe.team
+ * 
+ * This file is part of VarTools, licensed under the MIT License.
+ * 
+ */
 
 #include <bur/plctypes.h>
 #ifdef __cplusplus
