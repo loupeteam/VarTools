@@ -1,0 +1,68 @@
+# This workflow will run build an AS project and publish the libraries to the github package registry
+
+name: Build Libraries
+
+on: 
+  push:
+    branches-ignore:
+      - 'main'
+
+jobs:
+  build-publish-libraries:
+    runs-on: [AS411, ephemeral]
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: 'true'
+          path: "main"
+          lfs: true
+          token: ${{ secrets.GHA_PAT_4_25 }} # `GH_PAT` is a secret that contains your PAT
+      - uses: actions/checkout@v4
+        with:
+          repository: "loupeteam/AsGithubAction"
+          submodules: 'true'
+          ref: "main"
+          path: "AsGithubAction"
+          token: ${{ secrets.GHA_PAT_4_25 }} # `GH_PAT` is a secret that contains your PAT
+      - uses: actions/checkout@v4
+        with:
+          repository: "loupeteam/ASPython"
+          submodules: 'true'
+          ref: "bugfix/pvi-error-code"
+          path: "AsPython"
+          token: ${{ secrets.GHA_PAT_4_25 }} # `GH_PAT` is a secret that contains your PAT
+      - uses: actions/checkout@v4
+        with:
+          repository: "loupeteam/LPM"
+          submodules: 'true'
+          ref: "main"
+          path: "LPM"
+          token: ${{ secrets.GHA_PAT_4_25 }} # `GH_PAT` is a secret that contains your PAT
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: https://npm.pkg.github.com/
+      - name: Fix LFS
+        run:  |
+          cd ./main
+          git lfs pull
+      - name: Install AS upgrades
+        shell: pwsh
+        run: |
+          Set-Location -Path ./main/upgrades
+          & $PWD/install.ps1
+      - run: python.exe ./AsPython/CmdLineBuild.py ./main/example/AsProject/AsProject.apj -c Intel ARM -bm Rebuild -sim --logLevel DEBUG
+      - run: python.exe ./AsPython/CmdLineExportLib.py ./main/example/AsProject/AsProject.apj -dest ./libs -c Intel ARM -wl vartools -l DEBUG -o -bm "None"
+      # - run: python.exe ./ASPython/CmdLineARSim.py ${{ github.workspace }}/main/example/AsProject/AsProject.apj -c Intel --logLevel DEBUG -ss
+      # - run: python.exe ./ASPython/CmdLineRunUnitTests.py http://127.0.0.1 -a -d ./TestResults
+      - uses: ./AsGithubAction
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      # - run: | 
+      #     cd ./libs/vartools
+      #     python.exe ${{ github.workspace }}/LPM/src/LPM.py login -s -t ${{ secrets.GHA_PAT_4_25 }} -nc
+      #     python.exe ${{ github.workspace }}/LPM/src/LPM.py init -s -lib -nc
+      #     python.exe ${{ github.workspace }}/LPM/src/LPM.py publish -s -nc
