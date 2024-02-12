@@ -1,3 +1,4 @@
+0.11.4 - Update StringExt dependency
 0.11.3 - Increase maximum size of variable list from 50 to 100
 0.11.2 - populate variable values will populate ._ with just the parent name 
 0.11.1 - Fix bug in populate variable values with arrays of strings
