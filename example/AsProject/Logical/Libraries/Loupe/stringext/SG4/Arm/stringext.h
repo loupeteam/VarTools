@@ -1,6 +1,6 @@
 /* Automation Studio generated header file */
 /* Do not edit ! */
-/* stringext 0.14.4 */
+/* stringext 0.15.0 */
 
 #ifndef _STRINGEXT_
 #define _STRINGEXT_
@@ -9,7 +9,7 @@ extern "C"
 {
 #endif
 #ifndef _stringext_VERSION
-#define _stringext_VERSION 0.14.4
+#define _stringext_VERSION 0.15.0
 #endif
 
 #include <bur/plctypes.h>
@@ -85,6 +85,10 @@ _BUR_PUBLIC unsigned char wchar2char(unsigned short wcharacter);
 _BUR_PUBLIC signed long formatString(plcstring* dest, unsigned long destSize, plcstring* format, struct StrExtArgs_typ* pArgs);
 _BUR_PUBLIC unsigned long stringfTime(unsigned long dest, unsigned long destSize, unsigned long format, plcdt time);
 _BUR_PUBLIC plcdt stringpTime(unsigned long src, unsigned long format);
+_BUR_PUBLIC unsigned long stringdtoa(double value, plcstring* buffer, unsigned long ndigits, unsigned long bufferSize);
+_BUR_PUBLIC unsigned long stringftoa(float value, plcstring* buffer, unsigned long ndigits, unsigned long bufferSize);
+_BUR_PUBLIC double stringstrtod(plcstring* value, plcstring** pEnd);
+_BUR_PUBLIC float stringstrtof(plcstring* value, plcstring** pEnd);
 
 
 #ifdef __cplusplus
