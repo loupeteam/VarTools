@@ -46,5 +46,3 @@ jobs:
           & $PWD/install.ps1
       - run: python.exe ./AsPython/CmdLineBuild.py ./main/example/AsProject/AsProject.apj -c Intel ARM -bm Rebuild -sim --logLevel DEBUG
       - run: python.exe ./AsPython/CmdLineExportLib.py ./main/example/AsProject/AsProject.apj -dest ./libs -c Intel ARM -wl vartools -l DEBUG -o -bm "None"
-      # - run: python.exe ./ASPython/CmdLineARSim.py ${{ github.workspace }}/main/example/AsProject/AsProject.apj -c Intel --logLevel DEBUG -ss
-      # - run: python.exe ./ASPython/CmdLineRunUnitTests.py http://127.0.0.1 -a -d ./TestResults
