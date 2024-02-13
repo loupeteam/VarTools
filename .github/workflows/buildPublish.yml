@@ -22,28 +22,18 @@ jobs:
           submodules: 'true'
           path: "main"
           lfs: true
-          token: ${{ secrets.GHA_PAT_4_25 }} # `GH_PAT` is a secret that contains your PAT
-      - uses: actions/checkout@v4
-        with:
-          repository: "loupeteam/AsGithubAction"
-          submodules: 'true'
-          ref: "main"
-          path: "AsGithubAction"
-          token: ${{ secrets.GHA_PAT_4_25 }} # `GH_PAT` is a secret that contains your PAT
       - uses: actions/checkout@v4
         with:
           repository: "loupeteam/ASPython"
           submodules: 'true'
           ref: "bugfix/pvi-error-code"
           path: "AsPython"
-          token: ${{ secrets.GHA_PAT_4_25 }} # `GH_PAT` is a secret that contains your PAT
       - uses: actions/checkout@v4
         with:
           repository: "loupeteam/LPM"
           submodules: 'true'
           ref: "main"
           path: "LPM"
-          token: ${{ secrets.GHA_PAT_4_25 }} # `GH_PAT` is a secret that contains your PAT
       - uses: actions/setup-node@v3
         with:
           node-version: 16
@@ -64,6 +54,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - run: | 
           cd ./libs/vartools
-          python.exe ${{ github.workspace }}/LPM/src/LPM.py login -s -t ${{ secrets.GHA_PAT_4_25 }} -nc
+          python.exe ${{ github.workspace }}/LPM/src/LPM.py login -s -t ${{ secrets.GITHUB_TOKEN }} -nc
           python.exe ${{ github.workspace }}/LPM/src/LPM.py init -s -lib -nc
           python.exe ${{ github.workspace }}/LPM/src/LPM.py publish -s -nc
