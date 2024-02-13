@@ -31,10 +31,6 @@ jobs:
           submodules: 'true'
           ref: "main"
           path: "LPM"
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          registry-url: https://npm.pkg.github.com/
       - name: Fix LFS
         run:  |
           cd ./main
