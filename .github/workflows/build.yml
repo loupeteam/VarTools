@@ -9,7 +9,7 @@ on:
 
 jobs:
   build-publish-libraries:
-    runs-on: [AS411, ephemeral]
+    runs-on: [AS411, ephemeral, scott]
     permissions:
       contents: read
       packages: write
