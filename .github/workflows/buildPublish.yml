@@ -1,6 +1,6 @@
 # This workflow will run build an AS project and publish the libraries to the github package registry
 
-name: Build Libraries
+name: Build Publish Libraries
 
 on:
   push:
