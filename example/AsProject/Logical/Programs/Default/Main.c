@@ -12,7 +12,7 @@ void _INIT ProgramInit(void)
 
 void _CYCLIC ProgramCyclic(void)
 {
-
+	varGetValue(&var);
 }
 
 void _EXIT ProgramExit(void)
