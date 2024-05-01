@@ -24,10 +24,7 @@ jobs:
           cd ./main
           git lfs pull
       - name: Install AS upgrades
-        shell: pwsh
-        run: |
-          Set-Location -Path ./main/upgrades
-          & $PWD/install.ps1
+        run: python.exe C:/Tools/AsPython/InstallUpgrades.py ./main/upgrades -asp AS411 -r
       - name: Build project
         run: python.exe C:/Tools/AsPython/CmdLineBuild.py ./main/example/AsProject/AsProject.apj -c Intel ARM -bm Rebuild -sim --logLevel DEBUG
       - name: Export libraries
