@@ -24,8 +24,8 @@ jobs:
           cd ./main
           git lfs pull
       - name: Install AS upgrades
-        run: python.exe C:/Tools/AsPython/InstallUpgrades.py ./main/upgrades -asp AS411 -r --logLevel DEBUG
+        run: python.exe C:/Tools/AsPython/InstallUpgrades.py ${{ github.workspace }}/main/upgrades -asp AS411 -r --logLevel DEBUG
       - name: Build project
-        run: python.exe C:/Tools/AsPython/CmdLineBuild.py ./main/example/AsProject/AsProject.apj -c Intel ARM -bm Rebuild -sim --logLevel DEBUG
+        run: python.exe C:/Tools/AsPython/CmdLineBuild.py ${{ github.workspace }}/main/example/AsProject/AsProject.apj -c Intel ARM -bm Rebuild -sim --logLevel DEBUG
       - name: Export libraries
-        run: python.exe C:/Tools/AsPython/CmdLineExportLib.py ./main/example/AsProject/AsProject.apj -dest ./libs -c Intel ARM -wl vartools -l DEBUG -o -bm "None"
+        run: python.exe C:/Tools/AsPython/CmdLineExportLib.py ${{ github.workspace }}/main/example/AsProject/AsProject.apj -dest ./libs -c Intel ARM -wl vartools -l DEBUG -o -bm "None"
