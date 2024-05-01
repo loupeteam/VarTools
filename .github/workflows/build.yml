@@ -24,7 +24,7 @@ jobs:
           cd ./main
           git lfs pull
       - name: Install AS upgrades
-        run: python.exe C:/Tools/AsPython/InstallUpgrades.py ./main/upgrades -asp AS411 -r -l INFO
+        run: python.exe C:/Tools/AsPython/InstallUpgrades.py ./main/upgrades -asp AS411 -r --logLevel DEBUG
       - name: Build project
         run: python.exe C:/Tools/AsPython/CmdLineBuild.py ./main/example/AsProject/AsProject.apj -c Intel ARM -bm Rebuild -sim --logLevel DEBUG
       - name: Export libraries
