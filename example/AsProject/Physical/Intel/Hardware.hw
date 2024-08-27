@@ -1,4 +1,5 @@
-<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?AutomationStudio Version=4.11.5.46 FileVersion="4.9"?>
 <Hardware xmlns="http://br-automation.co.at/AS/Hardware">
   <Module Name="5AC901.IPLK-00" Type="5AC901.IPLK-00" Version="1.8.0.1">
     <Connection Connector="SS" TargetModule="5PC910.SX02-00" TargetConnector="SS2" />
