@@ -3,6 +3,7 @@
 name: Build Libraries
 
 on: 
+  workflow_dispatch:
   push:
     branches-ignore:
       - 'main'

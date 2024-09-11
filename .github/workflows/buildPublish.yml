@@ -3,6 +3,7 @@
 name: Build Publish Libraries
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
