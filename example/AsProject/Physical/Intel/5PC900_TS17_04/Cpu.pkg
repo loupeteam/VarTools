@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?AutomationStudio FileVersion="4.9"?>
 <Cpu xmlns="http://br-automation.co.at/AS/Cpu">
   <Objects>
@@ -16,14 +16,12 @@
     <Object Type="Package">mappView</Object>
     <Object Type="Package">mappVision</Object>
     <Object Type="Package">mappCockpit</Object>
-    <Object Type="Package">Motion</Object>
   </Objects>
   <Configuration ModuleId="5PC900.TS17-04">
     <AutomationRuntime Version="C4.90" />
     <Build GccVersion="6.3.0" PreBuildStep="" />
     <DefaultTargetMemory Tasks="UserROM" />
     <Safety SafetyRelease="0.0" />
-    <Transfer SavedOfflineInstallationFolder="" SavedPipDestinationFolder="" SavedRuntimeUtilityCenterPackagePath="" />
-    <Vc FirmwareVersion="V4.72.5" />
+    <Vc FirmwareVersion="" />
   </Configuration>
 </Cpu>
