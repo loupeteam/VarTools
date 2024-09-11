@@ -1,0 +1,32 @@
+# This workflow will run build an AS project and publish the libraries to the github package registry
+
+name: Build Libraries
+
+on: 
+  workflow_dispatch:
+  push:
+    branches-ignore:
+      - 'main'
+
+jobs:
+  build-libraries:
+    runs-on: [AS411]
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: 'true'
+          path: "main"
+          lfs: true
+      - name: Fix LFS
+        run:  |
+          cd ./main
+          git lfs pull
+      - name: Install AS upgrades
+        run: python.exe C:/Tools/AsPython/InstallUpgrades.py ${{ github.workspace }}/main/upgrades -asp AS411 -r --logLevel DEBUG
+      - name: Build project
+        run: python.exe C:/Tools/AsPython/CmdLineBuild.py ${{ github.workspace }}/main/example/AsProject/AsProject.apj -c Intel ARM -bm Rebuild -sim --logLevel DEBUG
+      - name: Export libraries
+        run: python.exe C:/Tools/AsPython/CmdLineExportLib.py ${{ github.workspace }}/main/example/AsProject/AsProject.apj -dest ./libs -c Intel ARM -wl vartools -l DEBUG -o -bm "None"
