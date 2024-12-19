@@ -78,6 +78,7 @@ unsigned short varGetValue(unsigned long pVariable)
 	DINT	valueDint;
 	UDINT	valueUdint;
 	REAL	valueReal;
+	LREAL  	valueLreal;
 
 
 	// Clear the Value string. It will be overwritten below
@@ -193,9 +194,9 @@ unsigned short varGetValue(unsigned long pVariable)
 	
 		case VAR_TYPE_LREAL:
 		
-			valueReal=	(REAL)*(LREAL*)(ipVariable->address);
+			valueLreal=	*(LREAL*)(ipVariable->address);
 		
-			brsftoa( valueReal, (UDINT)ipVariable->value );
+			stringdtoa(valueLreal, ipVariable->value, 0, sizeof(ipVariable->value));
 		
 			break;
 	
