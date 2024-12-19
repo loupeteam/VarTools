@@ -13,15 +13,19 @@ jobs:
   pool:
     name: 'AutomationStudioPool'  # Specify your custom agent pool name here
   steps:
-  - task: checkout@2  # Corrected task name
-    inputs:
-      submodules: true
-      path: "main"
-      lfs: true
-  - script: |
-      cd ./main
-      git lfs pull
-    displayName: 'Fix LFS'
+  - checkout: self  # Required as first property. Configures checkout for the specified repository.
+    clean: true
+    fetchDepth: 0
+    fetchTags: true
+    lfs: true
+    persistCredentials: true
+    submodules: recursive
+    path: "main"
+    displayName: 'Checkout repository'
+  # - script: |
+  #     cd ./main
+  #     git lfs pull
+  #   displayName: 'Fix LFS'
   - script: python.exe C:/Tools/AsPython/InstallUpgrades.py $(Build.SourcesDirectory)/main/upgrades -asp AS411 -r --logLevel DEBUG
     displayName: 'Install AS upgrades'
   - script: python.exe C:/Tools/AsPython/CmdLineBuild.py $(Build.SourcesDirectory)/main/example/AsProject/AsProject.apj -c Intel ARM -bm Rebuild -sim --logLevel DEBUG
