@@ -13,7 +13,7 @@ jobs:
   pool:
     name: 'AutomationStudioPool'  # Specify your custom agent pool name here
   steps:
-  - task: Checkout@2  # Corrected task reference format
+  - task: checkout@2  # Corrected task name
     inputs:
       submodules: true
       path: "main"
