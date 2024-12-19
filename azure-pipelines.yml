@@ -1,5 +1,4 @@
-# This workflow will run build an AS project and publish the libraries to the github package registry
-
+# This workflow will run build an AS project and save the libraries to a pipeline artifact
 trigger:
   branches:
     include:
@@ -11,9 +10,9 @@ trigger:
 jobs:
 - job: build_publish_libraries
   pool:
-    name: 'AutomationStudioPool'  # Specify your custom agent pool name here
+    name: 'AutomationStudioPool'
   steps:
-  - checkout: self  # Required as first property. Configures checkout for the specified repository.
+  - checkout: self
     clean: true
     fetchDepth: 0
     fetchTags: true
@@ -22,19 +21,18 @@ jobs:
     submodules: recursive
     path: "main"
     displayName: 'Checkout repository'
-  # - script: |
-  #     cd ./main
-  #     git lfs pull
-  #   displayName: 'Fix LFS'
+
   - script: python.exe C:/Tools/AsPython/InstallUpgrades.py $(Build.SourcesDirectory)/upgrades -asp AS411 -r --logLevel DEBUG
     displayName: 'Install AS upgrades'
+
   - script: python.exe C:/Tools/AsPython/CmdLineBuild.py $(Build.SourcesDirectory)/example/AsProject/AsProject.apj -c Intel ARM -bm Rebuild -sim --logLevel DEBUG
     displayName: 'Build project'
+
   - script: python.exe C:/Tools/AsPython/CmdLineExportLib.py $(Build.SourcesDirectory)/example/AsProject/AsProject.apj -dest ./libs -c Intel ARM -wl vartools -l DEBUG -o -bm "None"
     displayName: 'Export libraries'
-  - script: |
+
   - task: PublishPipelineArtifact@1
     inputs:
-      targetPath: '$(Pipeline.Workspace)/libs/vartools'
+      targetPath: '$(Pipeline.Workspace)/main/libs/vartools'
       artifact: 'vartools'
       publishLocation: 'pipeline'
