@@ -1,0 +1,38 @@
+# This workflow will run build an AS project and publish the libraries to the github package registry
+
+trigger:
+  branches:
+    include:
+      - main
+  tags:
+    include:
+      - v*
+
+jobs:
+- job: build_publish_libraries
+  pool:
+    name: 'AutomationStudioPool'  # Specify your custom agent pool name here
+  steps:
+  - task: Checkout@v2
+    inputs:
+      submodules: true
+      path: "main"
+      lfs: true
+  - script: |
+      cd ./main
+      git lfs pull
+    displayName: 'Fix LFS'
+  - script: python.exe C:/Tools/AsPython/InstallUpgrades.py $(Build.SourcesDirectory)/main/upgrades -asp AS411 -r --logLevel DEBUG
+    displayName: 'Install AS upgrades'
+  - script: python.exe C:/Tools/AsPython/CmdLineBuild.py $(Build.SourcesDirectory)/main/example/AsProject/AsProject.apj -c Intel ARM -bm Rebuild -sim --logLevel DEBUG
+    displayName: 'Build project'
+  - script: python.exe C:/Tools/AsPython/CmdLineExportLib.py $(Build.SourcesDirectory)/main/example/AsProject/AsProject.apj -dest ./libs -c Intel ARM -wl vartools -l DEBUG -o -bm "None"
+    displayName: 'Export libraries'
+  - script: |
+      cd ./libs/vartools
+      python.exe C:/Tools/LPM/src/LPM.py login -s -t $(GITHUB_TOKEN) -nc
+      python.exe C:/Tools/LPM/src/LPM.py init -s -lib -nc
+      python.exe C:/Tools/LPM/src/LPM.py publish -s -nc
+    displayName: 'Publish libraries'
+    env:
+      GITHUB_TOKEN: $(GITHUB_TOKEN)
