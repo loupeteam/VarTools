@@ -31,8 +31,7 @@ jobs:
   - script: python.exe C:/Tools/AsPython/CmdLineExportLib.py $(Build.SourcesDirectory)/example/AsProject/AsProject.apj -dest ./libs -c Intel ARM -wl vartools -l DEBUG -o -bm "None"
     displayName: 'Export libraries'
 
-  - task: PublishPipelineArtifact@1
+  - task: PublishBuildArtifacts@1
     inputs:
-      targetPath: '$(Pipeline.Workspace)/main/libs/vartools'
-      artifact: 'vartools'
-      publishLocation: 'pipeline'
+      pathToPublish: '$(Pipeline.Workspace)/main/libs/vartools'
+      artifactName: 'vartools'
