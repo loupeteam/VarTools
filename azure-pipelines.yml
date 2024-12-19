@@ -33,10 +33,8 @@ jobs:
   - script: python.exe C:/Tools/AsPython/CmdLineExportLib.py $(Build.SourcesDirectory)/example/AsProject/AsProject.apj -dest ./libs -c Intel ARM -wl vartools -l DEBUG -o -bm "None"
     displayName: 'Export libraries'
   - script: |
-      cd ./libs/vartools
-      python.exe C:/Tools/LPM/src/LPM.py login -s -t $(GITHUB_TOKEN) -nc
-      python.exe C:/Tools/LPM/src/LPM.py init -s -lib -nc
-      python.exe C:/Tools/LPM/src/LPM.py publish -s -nc
-    displayName: 'Publish libraries'
-    env:
-      GITHUB_TOKEN: $(GITHUB_TOKEN)
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: '$(Pipeline.Workspace)/libs/vartools'
+      artifact: 'vartools'
+      publishLocation: 'pipeline'
