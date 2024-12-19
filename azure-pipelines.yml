@@ -26,11 +26,11 @@ jobs:
   #     cd ./main
   #     git lfs pull
   #   displayName: 'Fix LFS'
-  - script: python.exe C:/Tools/AsPython/InstallUpgrades.py $(Build.SourcesDirectory)/main/upgrades -asp AS411 -r --logLevel DEBUG
+  - script: python.exe C:/Tools/AsPython/InstallUpgrades.py $(Build.SourcesDirectory)/upgrades -asp AS411 -r --logLevel DEBUG
     displayName: 'Install AS upgrades'
-  - script: python.exe C:/Tools/AsPython/CmdLineBuild.py $(Build.SourcesDirectory)/main/example/AsProject/AsProject.apj -c Intel ARM -bm Rebuild -sim --logLevel DEBUG
+  - script: python.exe C:/Tools/AsPython/CmdLineBuild.py $(Build.SourcesDirectory)/example/AsProject/AsProject.apj -c Intel ARM -bm Rebuild -sim --logLevel DEBUG
     displayName: 'Build project'
-  - script: python.exe C:/Tools/AsPython/CmdLineExportLib.py $(Build.SourcesDirectory)/main/example/AsProject/AsProject.apj -dest ./libs -c Intel ARM -wl vartools -l DEBUG -o -bm "None"
+  - script: python.exe C:/Tools/AsPython/CmdLineExportLib.py $(Build.SourcesDirectory)/example/AsProject/AsProject.apj -dest ./libs -c Intel ARM -wl vartools -l DEBUG -o -bm "None"
     displayName: 'Export libraries'
   - script: |
       cd ./libs/vartools
