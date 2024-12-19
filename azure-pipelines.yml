@@ -37,5 +37,5 @@ jobs:
       publishDirectory: '$(Pipeline.Workspace)/main/libs/vartools'
       feedsToUsePublish: 'internal'
       vstsFeedPublish: '1fa8a184-d390-4c05-8b59-19ab4ca4ef5f/ca506b3f-058b-4008-bf84-27c4d22b5b4c'
-      vstsFeedPackagePublish: 'Vartools'
+      vstsFeedPackagePublish: 'vartools'
       versionOption: 'patch'
