@@ -32,7 +32,7 @@
 //*******************************************************************
 
 
-// Fix: Seems to skip some variabels
+// Fix: Seems to skip some variables
 void varGetAllVars(varGetAllVars_typ* t)
 {
 	// Check for invalid input
@@ -68,8 +68,8 @@ void varGetAllVars(varGetAllVars_typ* t)
 		
 		if(checkGlobal(t)) {
 			// Check if variable has global
-			varRefresh(&t->Variable); // TODO: move thsi to getNextVariable
-			strcpy(t->Variable.name, t->Internal.xList.name); // TODO: move thsi to getNextVariable
+			varRefresh(&t->Variable); // TODO: move this to getNextVariable
+			strcpy(t->Variable.name, t->Internal.xList.name); // TODO: move this to getNextVariable
 			
 			t->Internal.validVar = checkValidVar(t);
 			resetCheckGlobal(t);

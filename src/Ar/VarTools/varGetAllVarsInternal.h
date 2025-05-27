@@ -56,7 +56,7 @@ plcbit goUpALevel(varGetAllVars_typ* t);
 
 plcbit getMembers(varGetAllVars_typ* t);
 plcbit incrementMember(varGetAllVars_typ* t);
-plcbit outOfMemebers(varGetAllVars_typ* t);
+plcbit outOfMembers(varGetAllVars_typ* t);
 plcbit outputMember(varGetAllVars_typ* t);
 plcbit memberIsPrimitive(varGetAllVars_typ* t);
 plcbit memberIsStructure(varGetAllVars_typ* t);
