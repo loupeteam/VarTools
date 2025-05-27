@@ -146,7 +146,7 @@ void varGetAllVars(varGetAllVars_typ* t)
 		else {
 			getMembers(t);
 			
-			while(outOfMemebers(t) && !atTopLevel(t)) {
+			while(outOfMembers(t) && !atTopLevel(t)) {
 				goUpALevel(t);
 				getMembers(t);
 			}

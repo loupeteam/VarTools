@@ -142,7 +142,7 @@ plcbit getMembers(varGetAllVars_typ* t) {
 plcbit incrementMember(varGetAllVars_typ* t) {
 	t->Internal.iMember[t->Internal.iDeep]++;
 }
-plcbit outOfMemebers(varGetAllVars_typ* t) {
+plcbit outOfMembers(varGetAllVars_typ* t) {
 	return !(t->Internal.iMember[t->Internal.iDeep] < t->Internal.Browser.NumberMembers);
 }
 plcbit outputMember(varGetAllVars_typ* t) {
