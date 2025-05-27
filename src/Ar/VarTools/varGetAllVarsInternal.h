@@ -62,17 +62,3 @@ plcbit memberIsPrimitive(varGetAllVars_typ* t);
 plcbit memberIsStructure(varGetAllVars_typ* t);
 plcbit memberIsArray(varGetAllVars_typ* t);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-

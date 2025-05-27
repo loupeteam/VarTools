@@ -162,17 +162,3 @@ plcbit memberIsPrimitive(varGetAllVars_typ* t) {
 	return !memberIsStructure(t);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
