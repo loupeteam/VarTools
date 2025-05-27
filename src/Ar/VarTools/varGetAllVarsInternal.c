@@ -33,6 +33,7 @@ plcbit getNextVariable(varGetAllVars_typ* t) {
 	t->Internal.iVar = nextVarIndex;
 	
 	t->Status = xListStatus == ERR_BUR_NOENTRY ? 0 : xListStatus == 0 ? 65535 : xListStatus;
+	return t->Status == 65535;
 }
 plcbit variableIsValid(varGetAllVars_typ* t) {
 	return t->Variable.dataType != VAR_TYPE_UNDEFINED;
