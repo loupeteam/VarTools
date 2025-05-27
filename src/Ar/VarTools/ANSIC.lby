@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <?AutomationStudio FileVersion="4.9"?>
-<Library Version="0.11.4" SubType="ANSIC" xmlns="http://br-automation.co.at/AS/Library">
+<Library Version="0.11.5" SubType="ANSIC" xmlns="http://br-automation.co.at/AS/Library">
   <Files>
     <File Description="Exported data types">VarTools.typ</File>
     <File Description="Exported constants">VarTools.var</File>
@@ -16,6 +16,9 @@
     <File>variableBrowser.c</File>
     <File Description="Force refresh of variable information in next getValue call">varRefresh.c</File>
     <File Description="">varToolsInternal.h</File>
+    <File Description="Get variable all information">varGetAllVars.c</File>
+    <File Description="Internal functions for varGetAllVars">varGetAllVarsInternal.h</File>
+    <File Description="Internal functions for varGetAllVars">varGetAllVarsInternal.c</File>
 </Files>
   <Dependencies>
     <Dependency ObjectName="sys_lib" />
