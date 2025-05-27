@@ -105,6 +105,7 @@ plcbit getNextTask(varGetAllVars_typ* t) {
 	
 	// TODO check for errors
 	//if(t->Internal.moList.status != 0) break; // Break if error
+	return t->Internal.moList.status == 0;
 }
 plcbit outOfTasks(varGetAllVars_typ* t) 		{ return t->Internal.moList.status == ERR_BUR_NOENTRY; }
 plcbit checkValidTask(varGetAllVars_typ* t) {
