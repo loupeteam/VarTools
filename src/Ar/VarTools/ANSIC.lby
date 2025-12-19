@@ -15,11 +15,11 @@
     <File Description="Set the value of a variable from a string">varVariableWatch.c</File>
     <File>variableBrowser.c</File>
     <File Description="Force refresh of variable information in next getValue call">varRefresh.c</File>
-    <File Description="">varToolsInternal.h</File>
+    <File>varToolsInternal.h</File>
     <File Description="Get variable all information">varGetAllVars.c</File>
     <File Description="Internal functions for varGetAllVars">varGetAllVarsInternal.h</File>
     <File Description="Internal functions for varGetAllVars">varGetAllVarsInternal.c</File>
-</Files>
+  </Files>
   <Dependencies>
     <Dependency ObjectName="sys_lib" />
     <Dependency ObjectName="AsBrStr" />
