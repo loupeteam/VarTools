@@ -24,6 +24,6 @@
     <Dependency ObjectName="sys_lib" />
     <Dependency ObjectName="AsBrStr" />
     <Dependency ObjectName="AsBrWStr" />
-    <Dependency ObjectName="stringext" FromVersion="0.14.0" ToVersion="0.15.9" />
+    <Dependency ObjectName="stringext" FromVersion="0.14.0" ToVersion="0.16.0" />
   </Dependencies>
 </Library>
