@@ -56,5 +56,7 @@
     <LibraryObject Name="MTBasics" Source="Libraries._AS.MTBasics.lby" Memory="UserROM" Language="binary" Debugging="true" />
     <LibraryObject Name="LoopConR" Source="Libraries._AS.LoopConR.lby" Memory="UserROM" Language="Binary" Debugging="true" />
     <LibraryObject Name="MTLookUp" Source="Libraries._AS.MTLookUp.lby" Memory="UserROM" Language="binary" Debugging="true" />
+    <LibraryObject Name="stringext" Source="Libraries.Loupe.stringext.lby" Memory="UserROM" Language="Binary" Debugging="true" />
+    <LibraryObject Name="VarTools" Source="Libraries.Loupe.VarTools.lby" Memory="UserROM" Language="ANSIC" Debugging="true" />
   </Libraries>
 </SwConfiguration>
